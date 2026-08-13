@@ -13,7 +13,8 @@ This project detects face mesh landmarks in a static image using Mediapipe and O
 
 ## Usage
 
-- Put your selfie image as `images/Selfie_casual.jpg`.
+- Runs out of the box on the bundled sample image at `Work_samples/Selfie_casual.png`.
+- To use your own photo, replace that file (or edit the `path_img` variable in `main.py`).
 - Run the script:
 
     ```
@@ -30,4 +31,4 @@ This project detects face mesh landmarks in a static image using Mediapipe and O
 
 ## License
 
-MIT
+Licensed under the [MIT License](LICENSE).
