@@ -34,7 +34,7 @@ def draw_landmarks(image, result):
                 connection_drawing_spec=mp_drawing_styles.get_default_face_mesh_tesselation_style()
             )
 
-path_img = r'C:\Users\abhib\OneDrive\Desktop\My Original Documents\Selfie_casual.jpg'
+path_img = 'Work_samples/Selfie_casual.png'  # sample image bundled with this repo; replace with your own photo
 
 img = cv2.imread(path_img)
 
