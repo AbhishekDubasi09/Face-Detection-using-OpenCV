@@ -13,6 +13,13 @@ pip install -r requirements.txt
 
 The landmarker model (about 4 MB) is downloaded into `models/` the first time you run the script.
 
+On a minimal Linux install MediaPipe may fail to import with `libEGL.so.1: cannot open shared object file`. Install the
+system libraries and try again:
+
+```
+sudo apt install libegl1 libgles2
+```
+
 ## Usage
 
 ```
