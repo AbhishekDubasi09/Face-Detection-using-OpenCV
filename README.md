@@ -1,34 +1,56 @@
-# Face Mesh Detection with Mediapipe and OpenCV
+# Face mesh on a still image
 
-This project detects face mesh landmarks in a static image using Mediapipe and OpenCV.
+Finds the 478 face landmarks in a photo with MediaPipe's FaceLandmarker and draws the mesh with OpenCV. It runs on one
+image, shows the result in a window, and can save it or print the coordinates.
 
 ## Installation
 
-1. Clone this repository.
-2. Install dependencies in your Python environment:
+I tested it with Python 3.11 and MediaPipe 1.1.0. Other Python versions that MediaPipe supports should work too.
 
-    ```
-    pip install -r requirements.txt
-    ```
+```
+pip install -r requirements.txt
+```
+
+The landmarker model (about 4 MB) is downloaded into `models/` the first time you run the script.
 
 ## Usage
 
-- Runs out of the box on the bundled sample image at `Work_samples/Selfie_casual.png`.
-- To use your own photo, replace that file (or edit the `path_img` variable in `main.py`).
-- Run the script:
+```
+python main.py                              # bundled sample image, result shown in a window
+python main.py photo.jpg                    # your own photo
+python main.py photo.jpg --output out.png   # also save the image with the mesh drawn on it
+python main.py photo.jpg --no-show          # no window, for scripts and servers
+python main.py photo.jpg --indices          # draw the landmark numbers
+python main.py photo.jpg --print-landmarks  # print x, y, z of all 478 landmarks
+```
 
-    ```
-    python main.py
-    ```
+The bundled sample, `Work_samples/Selfie_casual.png`, is a screenshot of an earlier run of this script, so it already has a
+mesh drawn on it. Use your own photo for a clean result.
 
-- The output displays face mesh on your image and prints landmark coordinates.
+## What you get
 
-## Dependencies
+- 468 face landmarks and 10 iris landmarks, 478 in total, for the first face in the image.
+- `x` and `y` are normalised to the image width and height, so they lie between 0 and 1. `z` is a relative depth.
+- The mesh is drawn from MediaPipe's tessellation, which connects the landmarks into triangles.
 
-- mediapipe
-- opencv-python
-- matplotlib
+If the image contains no face, the script says so and exits with an error.
 
-## License
+## Tests
 
-Licensed under the [MIT License](LICENSE).
+```
+pip install pytest
+python -m pytest tests
+```
+
+The tests check that the model loads, that 478 landmarks come back inside the image, that an image without a face returns
+nothing, and that drawing changes the image. They run on every push (see the CI workflow).
+
+## A note on MediaPipe versions
+
+Earlier versions of this script used `mp.solutions.face_mesh`. That legacy interface has been removed from current MediaPipe
+releases, so the old script failed on a fresh install with `No module named 'mediapipe.python'`. This version uses the
+FaceLandmarker task API, which is the supported one.
+
+## Licence
+
+MIT, see [LICENSE](LICENSE).
